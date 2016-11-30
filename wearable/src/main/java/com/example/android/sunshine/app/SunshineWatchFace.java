@@ -323,7 +323,19 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             }
 
             if (!mAmbient) {
-                Bitmap weatherBitmap = BitmapFactory.decodeResource(getResources(), Utility.getArtResourceForWeatherCondition(weatherId));
+                 /*
+                 Date: 30-Nov-2016
+                 Issue Fixing: But there seems to be an issue with your watch face the weatherIcon is getting drawn over the time and date text. Try changing the offset values for the icon or scale the bitmap.
+                 */
+
+
+                //Bitmap weatherBitmap = BitmapFactory.decodeResource(getResources(), Utility.getArtResourceForWeatherCondition(weatherId));
+
+
+                Bitmap tempBitmap = BitmapFactory.decodeResource(getResources(), Utility.getArtResourceForWeatherCondition(weatherId));
+                Bitmap weatherBitmap=Utility.getResizedBitmap(tempBitmap,tempBitmap.getWidth()/2,tempBitmap.getHeight()/2);
+                tempBitmap.recycle();
+
                 if (weatherBitmap != null) {
                     Log.d(TAG, "Bitmap is Null, weather_id = " + weatherId);
                     canvas.drawBitmap(weatherBitmap, centerX - (weatherBitmap.getWidth() / 2), centerY - (weatherBitmap.getHeight() / 2), null);
