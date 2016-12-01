@@ -333,15 +333,20 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
 
                 Bitmap tempBitmap = BitmapFactory.decodeResource(getResources(), Utility.getArtResourceForWeatherCondition(weatherId));
-                Bitmap weatherBitmap=Utility.getResizedBitmap(tempBitmap,tempBitmap.getWidth()/2,tempBitmap.getHeight()/2);
-                tempBitmap.recycle();
+                if (tempBitmap != null) {
+                    Bitmap weatherBitmap = Utility.getResizedBitmap(tempBitmap, tempBitmap.getWidth() / 2, tempBitmap.getHeight() / 2);
+                    tempBitmap.recycle();
 
-                if (weatherBitmap != null) {
-                    Log.d(TAG, "Bitmap is Null, weather_id = " + weatherId);
-                    canvas.drawBitmap(weatherBitmap, centerX - (weatherBitmap.getWidth() / 2), centerY - (weatherBitmap.getHeight() / 2), null);
+                    if (weatherBitmap != null) {
+                        Log.d(TAG, "Bitmap is Null, weather_id = " + weatherId);
+                        canvas.drawBitmap(weatherBitmap, centerX - (weatherBitmap.getWidth() / 2), centerY - (weatherBitmap.getHeight() / 2), null);
+                    } else {
+                        Log.d(TAG, "Bitmap weather_id = " + weatherId);
+                    }
                 } else {
-                    Log.d(TAG, "Bitmap weather_id = " + weatherId);
+                    Log.d(TAG, "tempBitmap is null ");
                 }
+
             }
 
             if (!mAmbient) {
